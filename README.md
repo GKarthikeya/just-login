@@ -1,2 +1,2 @@
-# PROCED.IN
+# just-login
 for proced
