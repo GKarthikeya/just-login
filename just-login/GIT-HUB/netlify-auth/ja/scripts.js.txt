@@ -2,19 +2,26 @@
 function toggleForm() {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
-    loginForm.classList.toggle('active');
-    signupForm.classList.toggle('active');
+
+    // Ensure only one form is visible at a time
+    if (loginForm.classList.contains('active')) {
+        loginForm.classList.remove('active');
+        signupForm.classList.add('active');
+    } else {
+        signupForm.classList.remove('active');
+        loginForm.classList.add('active');
+    }
 }
 
 // Login form validation
 function validateLogin() {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value.trim();
     const errorElement = document.getElementById('login-error');
     errorElement.innerHTML = "";
 
     // Basic email format validation
-    if (!email.includes('@')) {
+    if (!email.includes('@') || !email.includes('.')) {
         errorElement.innerHTML = "Please enter a valid email address.";
         return false;
     }
@@ -29,15 +36,19 @@ function validateLogin() {
 
 // Signup form validation
 function validateSignup() {
-    const name = document.getElementById('signup-name').value;
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('signup-confirm-password').value;
+    const name = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value.trim();
+    const confirmPassword = document.getElementById('signup-confirm-password').value.trim();
     const errorElement = document.getElementById('signup-error');
     errorElement.innerHTML = "";
 
-    // Basic email format validation
-    if (!email.includes('@')) {
+    if (name.length < 3) {
+        errorElement.innerHTML = "Full name must be at least 3 characters.";
+        return false;
+    }
+
+    if (!email.includes('@') || !email.includes('.')) {
         errorElement.innerHTML = "Please enter a valid email address.";
         return false;
     }
